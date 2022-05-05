@@ -1,0 +1,6 @@
+.btn {
+  padding: 5px 10px;
+  margin: 5px;
+  text-transform: capitalize;
+  cursor: pointer;
+}
