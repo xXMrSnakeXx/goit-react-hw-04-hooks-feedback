@@ -8,15 +8,21 @@ export class Statistics extends Component {
     stat: { good: 0, neutral: 0, bad: 0 },
     total: 0,
   };
+
   static propTypes = {
-    stat: PropTypes.array.isRequired,
+    stat: PropTypes.shape({
+      good: PropTypes.number,
+      neutral: PropTypes.number,
+      bad: PropTypes.number,
+    }).isRequired,
     total: PropTypes.number,
+    positivePercentage: PropTypes.number.isRequired,
   };
   render() {
     const { stat, total, positivePercentage } = this.props;
     return (
       <>
-        {stat.map(([key, value]) => (
+        {Object.entries(stat).map(([key, value]) => (
           <p className={s.text} key={key}>
             {key}: {value}
           </p>

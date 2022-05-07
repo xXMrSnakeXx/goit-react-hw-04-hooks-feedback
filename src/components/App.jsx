@@ -29,20 +29,18 @@ export class App extends Component {
   };
 
   render() {
-    const btnNames = Object.keys(this.state);
-    const stat = Object.entries(this.state);
     return (
       <>
         <Section title="Please, leave feedback">
           <FeedbackOptions
-            options={btnNames}
+            options={this.state}
             onLeaveFeedback={this.onLeaveFeedback}
           />
         </Section>
         <Section title="Statistics">
           {this.countTotalFeedback() ? (
             <Statistics
-              stat={stat}
+              stat={this.state}
               total={this.countTotalFeedback()}
               positivePercentage={this.countPositiveFeedbackPercentage()}
             />
