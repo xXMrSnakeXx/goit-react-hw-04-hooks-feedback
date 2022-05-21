@@ -6,29 +6,22 @@ import { Section } from './Section';
 import { Statistics } from './Statistics';
 
 export const App = () => {
-  const [good, setGood] = useState(0);
-  const [neutral, setNeutral] = useState(0);
-  const [bad, setBad] = useState(0);
+  const [state, setState] = useState({ good: 0, neutral: 0, bad: 0 });
 
   const onLeaveFeedback = name => {
-    switch (name) {
-      case 'good':
-        setGood(prevState => prevState + 1);
-        break;
-      case 'neutral':
-        setNeutral(prevState => prevState + 1);
-        break;
-      case 'bad':
-        setBad(prevState => prevState + 1);
-        break;
-      default:
-        return;
-    }
+    setState(state => ({ ...state, [name]: state[name] + 1 }));
   };
-  const countTotalFeedback = () => good + neutral + bad;
-  const countPositiveFeedbackPercentage = () =>
-    Math.round((good / countTotalFeedback()) * 100);
-  const options = Object.keys({ good, neutral, bad });
+  const countTotalFeedback = () => {
+    const { good, neutral, bad } = state;
+    return good + neutral + bad;
+  };
+  const countPositiveFeedbackPercentage = () => {
+    const { good } = state;
+    return Math.round((good / countTotalFeedback()) * 100);
+  };
+
+  const options = Object.keys(state);
+
   return (
     <>
       <Section title="Please, leave feedback">
@@ -37,7 +30,7 @@ export const App = () => {
       <Section title="Statistics">
         {countTotalFeedback() ? (
           <Statistics
-            stat={{ good, neutral, bad }}
+            stat={state}
             total={countTotalFeedback()}
             positivePercentage={countPositiveFeedbackPercentage()}
           />
